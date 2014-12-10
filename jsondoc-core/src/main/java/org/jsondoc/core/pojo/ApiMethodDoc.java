@@ -19,6 +19,7 @@ public class ApiMethodDoc {
 	private List<ApiHeaderDoc> headers;
 	private Set<ApiParamDoc> pathparameters;
 	private Set<ApiParamDoc> queryparameters;
+	private Set<ApiParamDoc> formparameters;
 	private ApiBodyObjectDoc bodyobject;
 	private ApiResponseObjectDoc response;
 	private List<ApiErrorDoc> apierrors;
@@ -145,6 +146,20 @@ public class ApiMethodDoc {
 
 	public void setAuth(ApiAuthDoc auth) {
 		this.auth = auth;
+	}
+
+	/**
+	 * @return the formparameters
+	 */
+	public Set<ApiParamDoc> getFormparameters() {
+		return formparameters;
+	}
+
+	/**
+	 * @param formparameters the formparameters to set
+	 */
+	public void setFormparameters(Set<ApiParamDoc> formparameters) {
+		this.formparameters = formparameters;
 	}
 
 }

@@ -151,7 +151,9 @@ public class JSONDocUtils {
 				
 				apiMethodDoc.setQueryparameters(ApiParamDoc.getApiParamDocs(method, ApiParamType.QUERY));
 				
-				apiMethodDoc.setBodyobject(ApiBodyObjectDoc.buildFromAnnotation(method));
+				apiMethodDoc.setFormparameters(ApiParamDoc.getApiParamDocs(method, ApiParamType.FORM));
+
+				//apiMethodDoc.setBodyobject(ApiBodyObjectDoc.buildFromAnnotation(method));
 				
 				if(method.isAnnotationPresent(ApiResponseObject.class)) {
 					apiMethodDoc.setResponse(ApiResponseObjectDoc.buildFromAnnotation(method.getAnnotation(ApiResponseObject.class), method));
