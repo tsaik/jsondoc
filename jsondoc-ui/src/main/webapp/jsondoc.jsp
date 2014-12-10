@@ -316,6 +316,39 @@ table td {
 							{{/if}}
 						{{/each}}
 					{{/if}}
+					{{#if formparameters}}
+						<tr>
+							<th colspan=2>Form parameters</th>
+						</tr>
+						{{#each formparameters}}
+							<tr>
+								<td><code>{{this.name}}</code></td>
+								<td>Required: {{this.required}}</td>
+							</tr>
+							{{#if this.description}}
+							<tr>
+								<td></td>
+								<td>Description: {{this.description}}</td>
+							</tr>
+							{{/if}}
+							<tr>
+								<td></td>
+								<td>Type: <code>{{this.jsondocType.oneLineText}}</code></td>
+							</tr>
+							{{#if this.allowedvalues}}
+							<tr>
+								<td></td>
+								<td>Allowed values: {{this.allowedvalues}}</td>
+							</tr>
+							{{/if}}
+							{{#if this.format}}
+							<tr>
+								<td></td>
+								<td>Format: {{this.format}}</td>
+							</tr>
+							{{/if}}
+						{{/each}}
+					{{/if}}										
 					{{#if bodyobject}}
 						<tr>
 							<th colspan=2>Body object</th>
@@ -449,6 +482,20 @@ table td {
 	</div>
 	{{/if}}
 
+	{{#if formparameters}}
+	<div class="col-md-12">
+		<div id="formparameters" class="playground-spacer">
+			<h4>Form parameters</h4>
+			{{#formparameters}}
+				<div class="form-group">
+					<label for="i_{{name}}">{{name}}</label>
+					<input type="text" class="form-control" id="i_{{name}}" name="{{name}}" placeholder="{{name}}">
+				</div>
+			{{/formparameters}}
+		</div>
+	</div>
+	{{/if}}
+	
 	{{#if bodyobject}}
 	<div class="col-md-12">
 		<div id="bodyobject" class="playground-spacer">
@@ -720,12 +767,18 @@ table td {
 										replacedPath = tempReplacedPath;
 									});
 									
+									var formData = '';
+									$("#formparameters input").each(function() {
+										formData = formData + this.name + '=' + $(this).val() + '&';
+									});
+									
+									
 									$('#testButton').button('loading');
 									
 									var res = $.ajax({
 										url : model.basePath + replacedPath,
 										type: method.verb,
-										data: $("#inputJson").val(),
+										data: formData,
 										headers: headers,
 										contentType: $("#consumes input:checked").val(),
 										success : function(data) {
